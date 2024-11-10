@@ -3,12 +3,18 @@ const ctx = canvas.getContext('2d');
 const width = canvas.width;
 const height = canvas.height;
 
-const xMin = -2.5, xMax = 1;
-const yMin = -1.5, yMax = 1.5;
-let maxIter = 100;
+let xMin = -2.5, xMax = 1;
+let yMin = -1.5, yMax = 1.5;
+let maxIter = 1000;
+let originalBounds = { xMin, xMax, yMin, yMax };
 
-const xStep = (xMax - xMin) / (width - 1);
-const yStep = (yMax - yMin) / (height - 1);
+function calculateStep() {
+    // Пересчитываем шаги каждый раз при изменении области
+    return {
+        xStep: (xMax - xMin) / (width - 1),
+        yStep: (yMax - yMin) / (height - 1),
+    };
+}
 
 function mandelbrot(x, y) {
     let zx = x;
@@ -43,17 +49,36 @@ function drawAxes() {
 
 function getColor(iter) {
     if (iter === maxIter) {
-        return 'black';
+        return '#FEFEF7'; // Белый цвет для максимальных итераций
+    } else if (iter < maxIter / 3) {
+        // Часть итераций от черного до красного
+        const ratio = iter / (maxIter / 3);
+        const red = Math.floor(13 + ratio * (254 - 13));   // от 0D0000 до FE2907
+        const green = Math.floor(0 + ratio * (41 - 0));    // от 0 до FE2907
+        const blue = Math.floor(0 + ratio * (7 - 0));     // от 0 до FE2907
+        return `rgb(${red}, ${green}, ${blue})`;
+    } else if (iter < 2 * maxIter / 3) {
+        // Часть итераций от красного до желтого
+        const ratio = (iter - maxIter / 3) / (maxIter / 3);
+        const red = Math.floor(254 + ratio * (255 - 254));   // от FE2907 до FEFD31
+        const green = Math.floor(41 + ratio * (253 - 41));   // от FE2907 до FEFD31
+        const blue = Math.floor(7 + ratio * (31 - 7));       // от FE2907 до FEFD31
+        return `rgb(${red}, ${green}, ${blue})`;
     } else {
-        const hue = Math.floor(360 * iter / maxIter);
-        const saturation = 100;
-        const lightness = iter < maxIter ? 55 : 0;
-
-        return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+        // Часть итераций от желтого до белого
+        const ratio = (iter - 2 * maxIter / 3) / (maxIter / 3);
+        const red = Math.floor(255 + ratio * (255 - 255));   // от FEFD31 до FEFEF7 (не меняем красный)
+        const green = Math.floor(253 + ratio * (255 - 253)); // от FEFD31 до FEFEF7
+        const blue = Math.floor(31 + ratio * (247 - 31));    // от FEFD31 до FEFEF7
+        return `rgb(${red}, ${green}, ${blue})`;
     }
 }
 
+
+
 function drawMandelbrot() {
+    const { xStep, yStep } = calculateStep();
+
     for (let ix = 0; ix < width; ix++) {
         for (let iy = 0; iy < height; iy++) {
             const x = xMin + ix * xStep;
@@ -68,10 +93,38 @@ function drawMandelbrot() {
 
 function updateAndDrawMand() {
     drawMandelbrot();
-    drawAxes();
+
 }
 
-updateAndDrawMand();
+canvas.addEventListener('click', (e) => {
+    const mouseX = e.offsetX;
+    const mouseY = e.offsetY;
+
+    const { xStep, yStep } = calculateStep();
+    const centerX = xMin + mouseX * xStep;
+    const centerY = yMin + mouseY * yStep;
+
+    // Масштабирование области при клике
+    const zoomFactor = 0.5; // Увеличиваем масштаб в два раза при каждом клике
+    const widthZoom = (xMax - xMin) * zoomFactor;
+    const heightZoom = (yMax - yMin) * zoomFactor;
+
+    xMin = centerX - widthZoom / 2;
+    xMax = centerX + widthZoom / 2;
+    yMin = centerY - heightZoom / 2;
+    yMax = centerY + heightZoom / 2;
+
+    updateAndDrawMand();
+});
+
+// Восстановление исходного масштаба
+document.getElementById('resetZoom').addEventListener('click', () => {
+    xMin = originalBounds.xMin;
+    xMax = originalBounds.xMax;
+    yMin = originalBounds.yMin;
+    yMax = originalBounds.yMax;
+    updateAndDrawMand();
+});
 
 document.getElementById('iter4Mandelbrot').addEventListener('input', (e) => {
     maxIter = parseInt(e.target.value);
@@ -80,25 +133,4 @@ document.getElementById('iter4Mandelbrot').addEventListener('input', (e) => {
     }, 200);
 });
 
-// Handle canvas click for zooming
-// let scale = 1;
-// let isZoomed = false;
-// canvas.addEventListener('click', (event) => {
-//     const rect = canvas.getBoundingClientRect();
-//     const mouseX = event.clientX - rect.left;
-//     const mouseY = event.clientY - rect.top;
-//
-//     if (!isZoomed) {
-//         // Zoom in
-//         scale = 2; // Change scale as needed
-//         ctx.setTransform(scale, 0, 0, scale, -mouseX * (scale - 1), -mouseY * (scale - 1));
-//     } else {
-//         // Reset to original scale
-//         scale = 1;
-//         ctx.setTransform(scale, 0, 0, scale, 0, 0);
-//     }
-//
-//     isZoomed = !isZoomed; // Toggle zoom state
-//     updateAndDrawMand(); // Redraw grid after zooming
-// });
-
+updateAndDrawMand();
