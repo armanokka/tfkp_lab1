@@ -105,10 +105,17 @@ function onSelectChange() {
         case "mandelbrot":
             manageMandelbrot(true)
             manageJulia(false)
+            manageSerpinsky(false)
             break;
         case "julia":
             manageMandelbrot(false)
             manageJulia(true)
+            manageSerpinsky(false)
+            break;
+        case "serpinsky":
+            manageMandelbrot(false)
+            manageJulia(false)
+            manageSerpinsky(true)
             break;
         default:
             console.log("unknown value", selectedValue)
@@ -125,10 +132,32 @@ function manageJulia(show) {
     document.querySelector(".julia_management").style.display = show ? "block" : "none";
 }
 
-// function manageGospera(hide) {
-//     document.querySelector(".mandelbrot").style.display = !hide
-//     document.querySelector(".mandelbrot_management").style.display = !hide
-// }
+function manageSerpinsky(show) {
+    document.querySelector("#serpinskyCanvas").style.display = show ? "block" : "none";
+    document.querySelector(".serpinsky_management").style.display = show ? "block" : "none";
+}
+
+// Handle canvas click for zooming
+let scaleJulia = 1;
+let isZoomedJulia = false;
+juliacanv.addEventListener('click', (event) => {
+    const rect = juliacanv.getBoundingClientRect();
+    const mouseX = event.clientX - rect.left;
+    const mouseY = event.clientY - rect.top;
+
+    if (!isZoomedJulia) {
+        // Zoom in
+        scaleJulia = 2; // Change scale as needed
+        ctx1.setTransform(scaleJulia, 0, 0, scaleJulia, -mouseX * (scaleJulia - 1), -mouseY * (scaleJulia - 1));
+    } else {
+        // Reset to original scale
+        scaleJulia = 1;
+        ctx1.setTransform(scaleJulia, 0, 0, scaleJulia, 0, 0);
+    }
+
+    isZoomedJulia = !isZoomedJulia; // Toggle zoom state
+    updateAndDraw(); // Redraw grid after zooming
+});
 
 onSelectChange()
 

@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ТФКП 1ЛР</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
 </head>
 <header class="header">
     <div class="header__logo">
@@ -21,21 +25,20 @@
     <div id="row">
         <div class="chart">
             <div class="mandelbrot">
-                <canvas height="450" width="450" id="mandelbrotCanvas"></canvas>
+                <canvas id="mandelbrotCanvas" height="450" width="450"></canvas>
             </div>
             <div class="julia">
                 <canvas id="juliaCanvas" height="450" width="450"></canvas>
             </div>
-<!--            <div class="abstract">-->
-<!--                <canvas height="450" width="450" id="abstractCanvas"></canvas>-->
-<!--                <h1>Еще одно</h1>-->
-<!--            </div>-->
+            <div class="serp">
+                <canvas id="serpinskyCanvas" width="450" height="450"></canvas>
+            </div>
         </div>
         <div class="manager">
             <select onchange="onSelectChange()" class="select">
                 <option class="option" value="mandelbrot">Множество Мандельброта</option>
                 <option class="option" value="julia">Множество Жюлиа</option>
-                <option class="option" value="gospera">Множество Госпера</option>
+                <option class="option" value="serpinsky">Треугольник Серпинского</option>
             </select>
             <div class="manager__panel">
                 <div class="mandelbrot_management">
@@ -46,12 +49,16 @@
                     <label>Параметр C (Y): <input type="range" id="cYSlider" min="-1" max="1" step="0.01" value="0.5251993" data-listener-added_15a15824="true"></label>
                     <label>Количество итераций: <input type="range" id="iterSlider" min="50" max="1000" step="50" value="500"></label>
                 </div>
+                <div class="serpinsky_management">
+                    <label>Глубина рекурсии: <input type="range" id="depth" value="2" min="0" max="10"></label>
+                </div>
             </div>
         </div>
     </div>
 </main>
 <script src="mandelbrot.js"></script>
 <script src="julia.js"></script>
+<script src="serpinsky.js"></script>
 </main>
 </body>
 </html>
