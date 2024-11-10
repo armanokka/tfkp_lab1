@@ -81,24 +81,24 @@ document.getElementById('iter4Mandelbrot').addEventListener('input', (e) => {
 });
 
 // Handle canvas click for zooming
-let scale = 1;
-let isZoomed = false;
-canvas.addEventListener('click', (event) => {
-    const rect = canvas.getBoundingClientRect();
-    const mouseX = event.clientX - rect.left;
-    const mouseY = event.clientY - rect.top;
-
-    if (!isZoomed) {
-        // Zoom in
-        scale = 2; // Change scale as needed
-        ctx.setTransform(scale, 0, 0, scale, -mouseX * (scale - 1), -mouseY * (scale - 1));
-    } else {
-        // Reset to original scale
-        scale = 1;
-        ctx.setTransform(scale, 0, 0, scale, 0, 0);
-    }
-
-    isZoomed = !isZoomed; // Toggle zoom state
-    updateAndDrawMand(); // Redraw grid after zooming
-});
+// let scale = 1;
+// let isZoomed = false;
+// canvas.addEventListener('click', (event) => {
+//     const rect = canvas.getBoundingClientRect();
+//     const mouseX = event.clientX - rect.left;
+//     const mouseY = event.clientY - rect.top;
+//
+//     if (!isZoomed) {
+//         // Zoom in
+//         scale = 2; // Change scale as needed
+//         ctx.setTransform(scale, 0, 0, scale, -mouseX * (scale - 1), -mouseY * (scale - 1));
+//     } else {
+//         // Reset to original scale
+//         scale = 1;
+//         ctx.setTransform(scale, 0, 0, scale, 0, 0);
+//     }
+//
+//     isZoomed = !isZoomed; // Toggle zoom state
+//     updateAndDrawMand(); // Redraw grid after zooming
+// });
 

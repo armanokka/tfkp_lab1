@@ -34,24 +34,24 @@ document.querySelector("#depth").addEventListener('change', (e)=>{
     drawSierpinski()
 })
 
-// Handle canvas click for zooming
-let scaleSerpinsky = 1;
-let isZoomedSerpinsky = false;
-serpinskyCanvas.addEventListener('click', (event) => {
-    const rect = serpinskyCanvas.getBoundingClientRect();
-    const mouseX = event.clientX - rect.left;
-    const mouseY = event.clientY - rect.top;
-
-    if (!isZoomedSerpinsky) {
-        // Zoom in
-        scaleSerpinsky = 2; // Change scale as needed
-        ctx2.setTransform(scaleSerpinsky, 0, 0, scaleSerpinsky, -mouseX * (scaleSerpinsky - 1), -mouseY * (scaleSerpinsky - 1));
-    } else {
-        // Reset to original scale
-        scaleSerpinsky = 1;
-        ctx2.setTransform(scaleSerpinsky, 0, 0, scaleSerpinsky, 0, 0);
-    }
-
-    isZoomedSerpinsky = !isZoomedSerpinsky; // Toggle zoom state
-    drawSierpinski(); // Redraw grid after zooming
-});
+// // Handle canvas click for zooming
+// let scaleSerpinsky = 1;
+// let isZoomedSerpinsky = false;
+// serpinskyCanvas.addEventListener('click', (event) => {
+//     const rect = serpinskyCanvas.getBoundingClientRect();
+//     const mouseX = event.clientX - rect.left;
+//     const mouseY = event.clientY - rect.top;
+//
+//     if (!isZoomedSerpinsky) {
+//         // Zoom in
+//         scaleSerpinsky = 2; // Change scale as needed
+//         ctx2.setTransform(scaleSerpinsky, 0, 0, scaleSerpinsky, -mouseX * (scaleSerpinsky - 1), -mouseY * (scaleSerpinsky - 1));
+//     } else {
+//         // Reset to original scale
+//         scaleSerpinsky = 1;
+//         ctx2.setTransform(scaleSerpinsky, 0, 0, scaleSerpinsky, 0, 0);
+//     }
+//
+//     isZoomedSerpinsky = !isZoomedSerpinsky; // Toggle zoom state
+//     drawSierpinski(); // Redraw grid after zooming
+// });

@@ -99,7 +99,6 @@ document.getElementById('iterSlider').addEventListener('input', (e) => {
 function onSelectChange() {
     let select = document.querySelector("select.select")
     let selectedValue = select.options[select.selectedIndex].value
-    console.log(selectedValue)
 
     switch (selectedValue) {
         case "mandelbrot":
@@ -137,27 +136,27 @@ function manageSerpinsky(show) {
     document.querySelector(".serpinsky_management").style.display = show ? "block" : "none";
 }
 
-// Handle canvas click for zooming
-let scaleJulia = 1;
-let isZoomedJulia = false;
-juliacanv.addEventListener('click', (event) => {
-    const rect = juliacanv.getBoundingClientRect();
-    const mouseX = event.clientX - rect.left;
-    const mouseY = event.clientY - rect.top;
-
-    if (!isZoomedJulia) {
-        // Zoom in
-        scaleJulia = 2; // Change scale as needed
-        ctx1.setTransform(scaleJulia, 0, 0, scaleJulia, -mouseX * (scaleJulia - 1), -mouseY * (scaleJulia - 1));
-    } else {
-        // Reset to original scale
-        scaleJulia = 1;
-        ctx1.setTransform(scaleJulia, 0, 0, scaleJulia, 0, 0);
-    }
-
-    isZoomedJulia = !isZoomedJulia; // Toggle zoom state
-    updateAndDraw(); // Redraw grid after zooming
-});
+// // Handle canvas click for zooming
+// let scaleJulia = 1;
+// let isZoomedJulia = false;
+// juliacanv.addEventListener('click', (event) => {
+//     const rect = juliacanv.getBoundingClientRect();
+//     const mouseX = event.clientX - rect.left;
+//     const mouseY = event.clientY - rect.top;
+//
+//     if (!isZoomedJulia) {
+//         // Zoom in
+//         scaleJulia = 2; // Change scale as needed
+//         ctx1.setTransform(scaleJulia, 0, 0, scaleJulia, -mouseX * (scaleJulia - 1), -mouseY * (scaleJulia - 1));
+//     } else {
+//         // Reset to original scale
+//         scaleJulia = 1;
+//         ctx1.setTransform(scaleJulia, 0, 0, scaleJulia, 0, 0);
+//     }
+//
+//     isZoomedJulia = !isZoomedJulia; // Toggle zoom state
+//     updateAndDraw(); // Redraw grid after zooming
+// });
 
 onSelectChange()
 
