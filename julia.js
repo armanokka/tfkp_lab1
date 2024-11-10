@@ -10,7 +10,7 @@ let originalBoundsJulia = { xMin: xMinJulia, xMax: xMaxJulia, yMin: yMinJulia, y
 let c = { x: -0.5251993, y: 0.5251993 };
 let maxIterJulia = 700;
 
-let zoomFactorJulia = 0.5; // Фактор зума
+let zoomFactorJulia = 0.5;
 
 function julia(x, y) {
     let iter = 0;
