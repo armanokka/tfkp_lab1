@@ -1,0 +1,57 @@
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ТФКП 1ЛР</title>
+</head>
+<header class="header">
+    <div class="header__logo">
+        МНОЖЕСТВО БОБРА
+        <img class="logo" src="static/bober.jpg">
+    </div>
+    <div class="header__authors">
+        <p>ТОРЕНИЯЗОВ АРМАН</p>
+        <p>ВАСИЛЬЕВ АЛЕКСАНДР</p>
+        <p>КОРОЛЕВ АРТЕМ</p>
+    </div>
+</header>
+<main class="main">
+    <h1>Лабораторная работа: Построение и визуализация фрактальных множеств</h1>
+    <div id="row">
+        <div class="chart">
+            <div class="mandelbrot">
+                <canvas height="450" width="450" id="mandelbrotCanvas"></canvas>
+            </div>
+            <div class="julia">
+                <canvas id="juliaCanvas" height="450" width="450"></canvas>
+            </div>
+<!--            <div class="abstract">-->
+<!--                <canvas height="450" width="450" id="abstractCanvas"></canvas>-->
+<!--                <h1>Еще одно</h1>-->
+<!--            </div>-->
+        </div>
+        <div class="manager">
+            <select onchange="onSelectChange()" class="select">
+                <option class="option" value="mandelbrot">Множество Мандельброта</option>
+                <option class="option" value="julia">Множество Жюлиа</option>
+                <option class="option" value="gospera">Множество Госпера</option>
+            </select>
+            <div class="manager__panel">
+                <div class="mandelbrot_management">
+                    <label>Количество итераций: <input type="range" id="iter4Mandelbrot" min="50" max="1000" step="50" value="100"></label>
+                </div>
+                <div class="julia_management">
+                    <label>Параметр C (X): <input type="range" id="cXSlider" min="-1" max="1" step="0.01" value="-0.5251993"></label>
+                    <label>Параметр C (Y): <input type="range" id="cYSlider" min="-1" max="1" step="0.01" value="0.5251993" data-listener-added_15a15824="true"></label>
+                    <label>Количество итераций: <input type="range" id="iterSlider" min="50" max="1000" step="50" value="500"></label>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="mandelbrot.js"></script>
+<script src="julia.js"></script>
+</main>
+</body>
+</html>
