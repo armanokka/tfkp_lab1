@@ -12,7 +12,6 @@ let maxIterJulia = 700;
 
 let zoomFactorJulia = 0.5; // Фактор зума
 
-// Функция для вычисления значений Julia
 function julia(x, y) {
     let iter = 0;
     while (x * x + y * y <= 4 && iter < maxIterJulia) {
@@ -24,7 +23,6 @@ function julia(x, y) {
     return iter;
 }
 
-// Функция для получения цвета в зависимости от количества итераций
 function getJuliaColor(iter) {
     if (iter === maxIterJulia) {
         return 'black';
@@ -49,7 +47,6 @@ function getJuliaColor(iter) {
     }
 }
 
-// Функция для рисования фрактала Julia
 function drawJulia() {
     ctx1.clearRect(0, 0, widthJulia, heightJulia);
 
@@ -67,16 +64,13 @@ function drawJulia() {
 
 
 
-// Функция для обновления и перерисовки
 function updateAndDraw() {
     drawJulia();
 
 }
 
-// Начальная отрисовка
 updateAndDraw();
 
-// Обработчики событий для слайдеров
 document.getElementById('cXSlider').addEventListener('input', (e) => {
     c.x = parseFloat(e.target.value);
     setTimeout(() => {
@@ -98,7 +92,6 @@ document.getElementById('iterSlider').addEventListener('input', (e) => {
     }, 20);
 });
 
-// Функция сброса зума
 document.getElementById('resetZoomJulia').addEventListener('click', () => {
     xMinJulia = originalBoundsJulia.xMin;
     xMaxJulia = originalBoundsJulia.xMax;
@@ -107,35 +100,29 @@ document.getElementById('resetZoomJulia').addEventListener('click', () => {
     updateAndDraw();
 });
 
-// Функция для зума (при клике по канвасу)
 function zoomJulia(event) {
     const mouseX = event.offsetX;
     const mouseY = event.offsetY;
 
-    // Вычисление координат фрактала на основе текущего зума
     const xStep = (xMaxJulia - xMinJulia) / widthJulia;
     const yStep = (yMaxJulia - yMinJulia) / heightJulia;
 
-    // Центрирование на точке клика
     const centerX = xMinJulia + mouseX * xStep;
     const centerY = yMinJulia + mouseY * yStep;
 
     const newWidth = (xMaxJulia - xMinJulia) * zoomFactorJulia;
     const newHeight = (yMaxJulia - yMinJulia) * zoomFactorJulia;
 
-    // Пересчет новых границ
     xMinJulia = centerX - newWidth / 2;
     xMaxJulia = centerX + newWidth / 2;
     yMinJulia = centerY - newHeight / 2;
     yMaxJulia = centerY + newHeight / 2;
 
-    updateAndDraw(); // Перерисовываем после зума
+    updateAndDraw();
 }
 
-// Обработчик кликов для зума
 juliacanv.addEventListener('click', zoomJulia);
 
-// Функция переключения между фракталами
 function onSelectChange() {
     let select = document.querySelector("select.select");
     let selectedValue = select.options[select.selectedIndex].value;
@@ -161,7 +148,6 @@ function onSelectChange() {
     }
 }
 
-// Функции управления видимостью фракталов
 function manageMandelbrot(show) {
     document.querySelector("#mandelbrotCanvas").style.display = show ? "block" : "none";
     document.querySelector(".mandelbrot_management").style.display = show ? "block" : "none";
